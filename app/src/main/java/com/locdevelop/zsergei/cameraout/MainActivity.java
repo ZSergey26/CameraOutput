@@ -1,6 +1,7 @@
 package com.locdevelop.zsergei.cameraout;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
@@ -13,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import java.io.File;
 import java.io.IOException;
 
 
@@ -52,9 +54,13 @@ public class MainActivity extends Activity implements  SurfaceHolder.Callback {
         CamcorderProfile cpHigh = CamcorderProfile
                 .get(CamcorderProfile.QUALITY_HIGH);
         recorder.setProfile(cpHigh);
-        //recorder.setOutputFile("/sdcard/videocapture_example.mp4");
+        recorder.setOutputFile(getVideoFile(MainActivity.this).getAbsolutePath());
         recorder.setMaxDuration(50000); // 50 seconds
         recorder.setMaxFileSize(5000000); // Approximately 5 megabytes
+    }
+
+    private File getVideoFile(Context context) {
+        return new File(context.getExternalFilesDir(null), "video.mp4");
     }
 
     private void prepareRecorder() {
